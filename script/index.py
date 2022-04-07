@@ -4,15 +4,19 @@ def leiaInt(msg):
     while True:
         try:
             n = int(input(msg))
+            if n < 0:
+                n *= -1
         except (ValueError, TypeError):
             print('\033[33mO dado não corresponde a um número inteiro')
             continue
         except KeyboardInterrupt:
             print('\033[31m\nA leitura de dados foi interrompida pelo usuário')
             return 0
-        
         else:
-            return n
+           if n == 0:
+               n = 1
+        return n
+
 
 print('\033[35m==' * 15)
 print("\033[33m{:^30}".format('GERANDO SENHAS'))
@@ -36,31 +40,35 @@ n = leiaInt('quantos números? ')
 
 print("\033[35m==" * 15)
 for pwd in range(0, senhas):
-    senha = ""
+    senha = []
     cont = 0
     while cont <= dígitos:
         cont += 1
         if M > 0:
             for l in range(0, M):
                 cont += 1
-                senha += choice(maiúsculas)
+                senha.append(choice(maiúsculas))
                 
         if m > 0:
             for l in range(0, m):
-                senha += choice(minusculas)
+                senha.append(choice(minusculas))
                 cont += 1
       
         if c > 0:
             for l in range(0, c):
-                senha += choice(especiais)
+                senha.append(choice(especiais))
                 cont += 1
         if n > 0:
             for l in range(0, n):
-                senha += choice(números)
+                senha.append(choice(números))
                 cont += 1
      
 
-
-    print('\033[1;31m{:^30}'.format(senha))
+    shuffle(senha)
+    print('          ', end= '')
+    for x in senha:
+        print(f"{x}", end='')
+    senha.clear
+    print("\n", end="")
 print("\033[35m==" * 15)
 print("\033[m", end= "")
